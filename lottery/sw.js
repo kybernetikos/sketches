@@ -1,4 +1,4 @@
-const CACHE_NAME = 'quantum-lottery-cache-v0';
+const CACHE_NAME = 'quantum-lottery-cache-v0.0';
 const urlsToCache = [
     '/lottery/index.html',
     '/lottery/App.js',
