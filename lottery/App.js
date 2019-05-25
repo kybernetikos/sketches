@@ -6,7 +6,7 @@ import NumberOfTickets from "./NumberOfTickets.js"
 import Shortcuts from "./Shortcuts.js"
 import Ticket from "./Ticket.js"
 
-const {div, button, table} = elements
+const {p, div, button, table} = elements
 
 const App = create(() => {
     let [number, setNumber] = useState(4)
@@ -47,7 +47,22 @@ const App = create(() => {
         loading ? div({className: 'loader'}) : table(
             {className: 'Tickets'},
             tickets.map((ticket) => Ticket({ticket, balls}))
-        )
+        ),
+        tickets.length === 0 ? div(
+            {className: 'why'},
+            p("This application generates random lottery tickets for various lotteries from a quantum random source."),
+            p("Why?  Well, one beloved interpretation ('many worlds') of what quantum physics might actually mean," +
+                " involves the entire universe as we know it dividing into multiple universes that try every possible" +
+                " outcome whenever a quantum random event occurs."),
+            p("If this is a good way of understanding things, it means that when you pick your lottery numbers using" +
+                " quantum randomness, you are really trying every possible combination of lottery numbers in different" +
+                " universes.  You're guaranteed to win!  Although you're not guaranteed to wake up in the universe where" +
+                " you did, rather than one of the millions where you didn't...."),
+            p("This app uses random numbers generated in a lab at the Australian National University by measuring the" +
+                " fluctuations of the vacuum, and downloaded securely over the internet."),
+            p("Think of it as a way of transferring money from the universes where you didn't win to the universe where" +
+                " you did. A quantum inter-universal money transfer order!")
+        ) : ""
     )
 })
 

@@ -56,7 +56,7 @@ button {
     background-color: #4599ff;
     color: white;
     margin-top: 20px;
-    margin-left: 42%;
+    margin-left: 50%;
 }
 
 button:hover {
@@ -87,7 +87,7 @@ h1 {
 
 #root {
     padding: 10px;
-    width: 360px;
+    width: 340px;
     margin: auto;
 }
 
@@ -96,4 +96,22 @@ h1 {
     padding: 10px;
     background-color: #377cbd;
     color: white;
+}
+
+.Lottery {
+    font-size: small;
+}
+
+.Lottery input {
+    font-size: small;
+    width: 2.9em;
+}
+
+.why {
+    border-top: 5px solid red;
+    margin-top: 25px;
+    padding: 10px;
+    background-color: #2ca2af;
+    color: white;
+    font-size: small;
 }
