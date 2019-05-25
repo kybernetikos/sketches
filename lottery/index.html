@@ -17,7 +17,12 @@
 
     <h1>Quantum Lottery</h1>
 
-    <div id="root"></div>
+    <div id="root">
+        <script nomodule>
+            document.write("<p>Sorry, I made this for fun, which means it only supports browsers that I find fun to work with.</p>")
+            document.write("<p>You could try a recent Firefox or Chrome.</p>")
+        </script>
+    </div>
 
     <script type="module">
         import {render} from "./preact-10.0.0-beta.1/preact.module.js"
@@ -40,5 +45,6 @@
             document.getElementById('root')
         )
     </script>
+
 </body>
 </html>
