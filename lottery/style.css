@@ -21,7 +21,7 @@ body {
     font-size: large;
 }
 
-.group-1, .group-3 {
+.group-1, .group-3, .group-5 {
     background-color: white;
     border-color: #555555;
 }
@@ -56,7 +56,7 @@ button {
     background-color: #4599ff;
     color: white;
     margin-top: 20px;
-    margin-left: 50%;
+    margin-left: 44%;
 }
 
 button:hover {
@@ -105,6 +105,12 @@ h1 {
 .Lottery input {
     font-size: small;
     width: 2.9em;
+}
+
+.Tickets {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .why {
