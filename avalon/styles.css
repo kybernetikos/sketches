@@ -1,0 +1,93 @@
+body {
+	font-family: 'Jim Nightshade', serif;
+	font-size: x-large;
+}
+
+fieldset {
+	border: none;
+}
+
+#control {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+}
+
+button {
+	font-family: 'Jim Nightshade', serif;
+	font-size: x-large;
+}
+
+input {
+	display: none;
+}
+
+.intro label {
+	width: 60px;
+	height: 60px;
+	font-size: medium;
+	color: black;
+	text-shadow: none;
+}
+
+label {
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: top center;
+	border: 1px solid white;
+	position: relative;
+	margin: 4px;
+	vertical-align: bottom;
+	width: 110px;
+	height: 110px;
+	padding: 2px;
+	text-align: center;
+	border-radius: 15px;
+	color: white;
+	text-shadow: 2px 2px 2px black, 2px -2px 2px black, -2px 2px 2px black, -2px -2px 2px black;
+}
+
+.label {
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+.characters label {
+	border: 1px solid grey;
+}
+
+#monarchist + label {
+	background-image: url(images/crown.png);
+}
+
+#democrat + label {
+	background-image: url(images/eagle.png);
+}
+
+#merlin + label {
+	background-image: url(images/merlin.png);
+}
+
+#perceval + label {
+	background-image: url(images/percival.png);
+}
+
+#mordred + label {
+	background-image: url(images/mordred.png);
+}
+
+#morgana + label {
+	background-image: url(images/morgana.png);
+}
+
+#oberon + label {
+	background-image: url(images/oberon.png);
+}
+
+input:checked + label {
+	background-color: #fde6ba;
+	border: 1px solid #d1be9a;
+}

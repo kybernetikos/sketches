@@ -1,0 +1,248 @@
+<html>
+<head>
+    <title>Knock Code</title>
+    <style>
+        #guess {
+            font-size: xx-large;
+            border: 1px solid #5f4918;
+            background-color: #ffce37;
+            padding: 3em;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+<audio id="yeah" src="yeah.wav" preload="auto"></audio>
+<audio id="aagh" src="aagh.wav" preload="auto"></audio>
+
+<script>
+    const knockSounds = Array(5).fill(null).map((_, i) => {
+        const snd = document.createElement('audio')
+        snd.src = `knock${i + 1}.wav`
+        snd.preload = true
+        return snd
+    })
+    const yeah = document.getElementById('yeah')
+    const aagh = document.getElementById('aagh')
+</script>
+
+<div id="guess">&nbsp;</div>
+
+<h3>Knock Code Trainer</h3>
+
+<p><a href="https://en.wikipedia.org/wiki/Tap_code">Knock Code</a> or Tap code is an easy to learn encoding of 25 letters
+of the alphabet into knocks/flashes.  Space plays/pauses, any other letter is taken as a guess for the next letter that
+you haven't guessed yet in the word.  If you pause then play, play will continue from the first letter you haven't
+guessed yet.  If you've guessed all the letters, a new word will be chosen.</p>
+
+<p>Letters are encoded into groups of two.  The first set of taps selects between a/f/l/q/v, the second set selects
+between the 5 letters starting with the letter chosen in first set, so 'o' is encoded as 3 taps then 4 taps and 'a' is
+encoded as 1 tap then 1 tap.</p>
+
+<button onclick="app.newWord()">New Word</button>
+<button onclick="app.startFromGuess()">Start</button>
+<button onclick="app.stop()">Stop</button>
+<button onclick="document.getElementById('guess').innerHTML = app.currentWord">Reveal</button>
+
+<ul style="list-style-type: none">
+    <li>Gap <input onchange='app.gap=Number(this.value);this.blur()' type="number" min="50" value="350" max="2000"></li>
+    <li>Pause <input onchange='app.pause=Number(this.value);this.blur()' type="number" min="500" value="1000" max="5000"></li>
+    <li>Audio on <input onchange='app.audioOn=this.checked;this.blur()' type="checkbox" checked="true"></li>
+    <li>Flash on <input onchange='app.videoOn=this.checked;this.blur()' type="checkbox" checked="true"></li>
+</ul>
+
+
+<script>
+    const alphabet = ['a', 'b', 'c', 'd', 'e',
+                    'f', 'g', 'h', 'i', 'j',
+                    'l', 'm', 'n', 'o', 'p',
+                    'q', 'r', 's', 't', 'u',
+                    'v', 'w', 'x', 'y', 'z']
+
+    function knocks(word) {
+        return Array.from(word).reduce((acc, item) => {
+            const base = item.toLowerCase().replace(/k/, 'c')
+            const index = alphabet.indexOf(base)
+            if (index < 0) {
+                acc.push(0)
+            } else {
+                const first = Math.floor(index / 5) + 1
+                const second = (index % 5) + 1
+                acc.push(first, second)
+            }
+            return acc
+        }, [])
+    }
+
+    class Timer {
+        constructor() {
+            this.remainingEvents = []
+            this.timeout = null
+        }
+        setProgram(program) {
+            this.clear()
+            this.remainingEvents.length = 0
+            const start = Date.now()
+            let lastEvent = {}
+            for (let key in program) {
+                const scheduledTime = key + start
+                if (lastEvent.start === scheduledTime) {
+                    let lastCallback = lastEvent.callback
+                    lastEvent.callback = () => {
+                        lastCallback()
+                        program[key]()
+                    }
+                } else {
+                    lastEvent = {start: Number(key) + start, callback: program[key]}
+                    this.remainingEvents.push(lastEvent)
+                }
+            }
+            this.run()
+        }
+
+        clear() {
+            if (this.timeout !== null) {
+                clearTimeout(this.timeout)
+                this.timeout = null
+            }
+            this.remainingEvents.length = 0
+        }
+
+        run() {
+            const now = Date.now()
+            while (this.remainingEvents.length > 0 && this.remainingEvents[0].start <= now) {
+                this.remainingEvents[0].callback()
+                this.remainingEvents.shift()
+            }
+            if (this.remainingEvents.length > 0) {
+                this.timeout = setTimeout(() => this.run(), this.remainingEvents[0].start - now)
+            } else {
+                this.timeout = null
+            }
+        }
+    }
+
+    function randomChoice(array) {
+        return array[Math.floor(Math.random() * array.length)]
+    }
+
+    class App {
+        constructor(successfulGuess, failedGuess) {
+            this.words = []
+            this.gap = 300
+            this.pause = 1000
+            this.currentWord = ""
+            this.audioOn = true
+            this.videoOn = true
+            this.timer = new Timer()
+            this.guess = ""
+            this.successfulGuess = successfulGuess
+            this.failedGuess = failedGuess
+        }
+
+        setWords(words) {
+            this.words = words
+            console.log('words loaded')
+        }
+
+        newWord() {
+            this.currentWord = randomChoice(this.words).toLowerCase()
+            this.guess = ""
+        }
+
+        guessChar(chr) {
+            if (this.currentWord[this.guess.length] === chr || (chr === 'c' && this.currentWord[this.guess.length] === 'k')) {
+                this.guess += this.currentWord[this.guess.length]
+                this.successfulGuess()
+            } else {
+                this.failedGuess()
+            }
+        }
+
+        start() {
+            if (this.currentWord === '') {
+                this.newWord()
+            }
+            this.schedule(this.currentWord, () => {
+                this.knock()
+            }, this.gap, this.pause, 1000)
+        }
+
+        startFromGuess() {
+            if (this.currentWord === '') {
+                this.newWord()
+            }
+            this.schedule(this.currentWord.substring(this.guess.length), () => {
+                this.knock()
+            }, this.gap, this.pause, 1000)
+        }
+
+        stop() {
+            this.timer.clear()
+        }
+
+        schedule(text, fn, gap = 500, pause = 1200, start = 0) {
+            let next = 0
+            const code = knocks(text)
+            const program = {}
+            for (let group of code) {
+                for (let i = 0; i < group; ++i) {
+                    next = next + gap
+                    program[next] = fn
+                }
+                next = next + pause
+            }
+            this.timer.setProgram(program)
+        }
+
+        knock() {
+            if (this.videoOn) {
+                document.body.style.backgroundColor = 'black'
+                setTimeout(() => document.body.style.backgroundColor = 'white', 150)
+            }
+            if (this.audioOn) {
+                const audio = knockSounds[0];
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.currentTime = 0
+                }
+            }
+        }
+
+    }
+
+    const app = new App(() => {
+        document.getElementById('guess').innerHTML = app.guess
+        yeah.play()
+    }, () => {
+        aagh.play()
+    })
+
+    let stopped = true
+    document.onkeypress = function(e) {
+        const pressed = e.key.toLowerCase()
+        if (pressed === ' ') {
+            if (app.guess === app.currentWord) {
+                stopped = true
+                app.newWord()
+                document.getElementById('guess').innerHTML = app.guess || "&nbsp;"
+                app.startFromGuess()
+            }
+            if (stopped) {
+                app.startFromGuess()
+            } else {
+                app.stop()
+            }
+            stopped = !stopped
+        } else {
+            app.guessChar(pressed)
+        }
+    }
+
+    fetch('wordlist.txt').then((response) => response.text()).then((txt) => app.setWords(txt.split('\n')))
+</script>
+
+</body>
+</html>

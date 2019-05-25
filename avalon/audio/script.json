@@ -1,0 +1,92 @@
+{
+	"steps": [
+		{
+			"text": "True Evil is rampant in the land. Arthur represents the future of Britain, a promise of prosperity and honor, yet hidden among his brave warriors are Mordred's unscrupulous minions.  Theses forces of Evil are few in number but have knowledge of each other and remain hidden from all but one of Arthur's servants. Merlin alone knows the agents of Evil, but he must speak of this only in riddles.  If his true identity is discovered all will be lost.",
+			"file": "000_intro_monarchist",
+			"filter": {
+				"intro": "monarchist"
+			}
+		},
+		{
+			"text": "The Evil empire of Arthur rules over the land with an iron fist, murdering those who follow different paths and oppressing the people with impunity.  Only the noble Mordred and his supporters in the resistance can free the land and usher in democracy but they are few in number. Hiding in plain sight among Arthurs followers they are still vulnerable to Merlin, Arthur's fearsome mage.  But Arthurs reign is too dependent on powerful relics and Merlins illicit powers, and if they can discover his identity and negate his powers, they might still achieve victory.",
+			"file": "001_intro_democrat",
+			"filter": {
+				"intro": "democrat"
+			}
+		},
+		{
+			"text": "Everyone close your eyes and extend your hand into a fist in front of you",
+			"file": "010_initial_instructions"
+		},
+		{
+			"text": "Minions of Mordred open your eyes and look around so that you know all agents of Evil",
+			"file": "011_no_oberon",
+			"filter": {
+				"oberon": false
+			}
+		},
+		{
+			"text": "Minions of Mordred, but not Oberon, open your eyes and look around you so that you know all agents of Evil",
+			"file": "012_oberon",
+			"filter": {
+				"oberon": true
+			}
+		},
+		{
+			"text": "Minions of Mordred close your eyes.",
+			"file": "020_merlin_section_start"
+		},
+		{
+			"text": "Minions of Mordred, extend your thumb so that Merlin will know of you.",
+			"file": "021_merlin_no_mordred",
+			"filter": {
+				"merlin": true,
+				"mordred": false
+			}
+		},
+		{
+			"text": "Minions of Mordred, but not Mordred himself, extend your thumb so that Merlin will know of you.",
+			"file": "022_merlin_and_mordred",
+			"filter": {
+				"merlin": true,
+				"mordred": true
+			}
+		},
+		{
+			"text": "Merlin, open your eyes and see the agents of Evil.  Minions of Mordred - put your thumbs down and re-form your hand into a fist.  Merlin, close your eyes.  All players should have their eyes closed and hands in a fist in front of them.",
+			"file": "023_merlin_section_end",
+			"filter": {
+				"merlin": true
+			}
+		},
+		{
+			"text": "Merlin, extend your thumb so that Percival may know of you. Percival, open your eyes so you may know Merlin. Merlin, put your thumb down and form your hand into a fist.",
+			"file": "030_percival_merlin_no_morgana",
+			"filter": {
+				"merlin": true,
+				"percival": true,
+				"morgana": false
+			}
+		},
+		{
+			"text": "Merlin and Morgana, extend your thumb so that Percival may know of you.\tPercival, open your eyes so you may know Merlin and Morgana. Merlin and Morgana, put your thumbs down and form your hand into a fist.",
+			"file": "031_percival_merlin_morgana",
+			"filter": {
+				"merlin": true,
+				"percival": true,
+				"morgana": true
+			}
+		},
+		{
+			"text": "Percival, close your eyes.",
+			"file": "032_percival_section_end",
+			"filter": {
+				"percival": true
+			}
+		},
+		{
+			"text": "All players should have their eyes closed and hands in a fist in front of them.  Everyone, open your eyes.",
+			"file": "040_general_end"
+		}
+	]
+}

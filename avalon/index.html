@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Avalon</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href='http://fonts.googleapis.com/css?family=Jim+Nightshade' rel='stylesheet' type='text/css'>
+	<link href="styles.css" rel="stylesheet" type="text/css">
+	<script src="App.js" type="text/javascript"></script>
+</head>
+<body>
+
+<form id='configuration'>
+	Introduction
+	<fieldset class="intro">
+		<input id='monarchist' type="radio" name="intro" checked="true" value="monarchist" /><label for="monarchist"><span class='label'>Monarchist</span></label>
+		<input id='democrat' type="radio" name="intro" value="democrat"/><label for="democrat"><span class='label'>Democrat</span></label>
+		<input id='none' type="radio" name="intro" checked="true" value="none"/><label for="none"><span class='label'>None</span></label>
+	</fieldset>
+	Characters
+	<fieldset class="characters">
+		<input type="checkbox" name="merlin" checked="true" id='merlin'/><label for="merlin"><span class='label'>Merlin</span></label>
+		<input type="checkbox" name="perceval" id='perceval'><label for="perceval"><span class='label'>Perceval</span></label>
+		<input type="checkbox" name="mordred" id='mordred'/><label for="mordred"><span class='label'>Mordred</span></label>
+		<input type="checkbox" name="oberon" id='oberon'/><label for="oberon"><span class='label'>Oberon</span></label>
+		<input type="checkbox" name="morgana" id='morgana'/><label for="morgana"><span class='label'>Morgana</span></label>
+	</fieldset>
+</form>
+
+<div id='control'>
+	<button id='play' onclick="app.play();">Play</button>
+	<button id='stop' onclick="app.stop();">Stop</button>
+</div>
+
+<script>
+	var app = new App(getConfig('audio/script.json'));
+</script>
+
+</body>
+</html>
