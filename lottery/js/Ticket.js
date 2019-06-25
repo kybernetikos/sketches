@@ -1,5 +1,5 @@
 import {create, elements} from "./utils.js"
-import {useState} from "./preact-10.0.0-beta.1/hooks.module.js"
+import {useState} from "../dependencies/preact-10.0.0-beta.1/hooks.module.js"
 
 const {tr, td} = elements
 

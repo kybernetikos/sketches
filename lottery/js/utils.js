@@ -1,4 +1,4 @@
-import {createElement} from "./preact-10.0.0-beta.1/preact.module.js";
+import {createElement} from "../dependencies/preact-10.0.0-beta.1/preact.module.js";
 
 const create = (component) =>
     (props, ...children) =>
