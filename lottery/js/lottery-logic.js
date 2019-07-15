@@ -47,10 +47,18 @@ const base = 'https://qrng.anu.edu.au/API/jsonI.php?type=uint8&length='
 
 async function requestRandomHexOctets(num) {
     const url = base + String(num)
-    console.debug('fetching', num, 'random numbers from');
-    return fetch(url)
+    console.debug('fetching', num, 'random numbers from', url);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    setTimeout(() => controller.abort(), 4000);
+
+    return fetch(url, {signal})
         .then((response) => response.json())
         .then((body) => body.data.map((a) => parseInt(a, 16)))
+        .catch( (err) => {
+            console.error(err)
+            alert(`Unable to get the quantum random numbers.\nPerhaps https://qrng.anu.edu.au is down.\nPlease try again another time.`)
+        })
 }
 
 function makeRandomSource() {
